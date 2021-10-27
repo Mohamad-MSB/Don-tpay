@@ -1,0 +1,12 @@
+
+.container_article{
+
+
+        .article_card{
+
+           
+
+         display: grid;
+         grid-template-columns: repeat( auto-fit, minmax(200px, min-content) );
+        }
+}
