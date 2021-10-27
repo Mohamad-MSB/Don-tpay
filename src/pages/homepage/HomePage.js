@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { ContextAPI } from '../../store/context';
 import Slider from '../../components/carousel/Slider';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-
-
+import AOS from 'aos';
+ 
 
 function HomePage() {
 
@@ -24,10 +24,11 @@ function HomePage() {
         } catch (error) {
             console.log(error.message);
         }
-    }
+    } 
 
     useEffect(() => {
         articles()
+        AOS.init();
     }, [])
 
     return (
@@ -35,13 +36,10 @@ function HomePage() {
             <Slider />
             <div className="container_center">
                 <div className="container_articles">
-                    {newArticles.length === 0 ? <h1>there is no articles</h1> : search ? allArticles.filter(item => item.articlename.startsWith(search) || item.user_id.address.city.startsWith(search)).map(article => {
+                    {newArticles.length === 0 ? <h1>there is no articles</h1> : search ? allArticles.filter(item => item.articlename.toLowerCase().startsWith(search.toLowerCase()) || item.user_id.address.city.toLowerCase().startsWith(search.toLowerCase())).map(article => {
                         return (
-                            <Link to={`/category/${article.category}/${article._id}`} key={article._id} className="article">
-
+                            <Link to={`/category/${article.category}/${article._id}`} key={article._id} className="article" data-aos="fade-up">
                                 <img src={`${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_IMGA}/${article.articleimage}`} alt="test for now" />
-
-
                                 <div className="thumbnail_text">
                                     <p>{article.articlename}</p>
                                     <div className="location">
@@ -54,11 +52,8 @@ function HomePage() {
                         )
                     }) : newArticles.map(article => {
                         return (
-                            <Link to={`/category/${article.category}/${article._id}`} key={article._id} className="article">
-
+                            <Link to={`/category/${article.category}/${article._id}`} key={article._id} className="article" data-aos="fade-up">
                                 <img src={`${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_IMGA}/${article.articleimage}`} alt="test for now" />
-
-
                                 <div className="thumbnail_text">
                                     <p>{article.articlename}</p>
                                     <div className="location">
@@ -67,8 +62,7 @@ function HomePage() {
                                     <span>{article.user_id.address.city}</span>
                                     </div>
                                 </div>
-                            </Link>
-                        )
+                            </Link> )
                     })}
                 </div>
             </div>

@@ -4,6 +4,7 @@ import axios from "../../util/axiosInstance";
 import { useParams, Link } from "react-router-dom";
 import "./userprofile.scss";
 import HeroImage from "../../components/heroImage/HeroImage";
+import defaultImage from '../../Images/unnamed.png';
 
 
 function UserProfile() {
@@ -27,21 +28,21 @@ function UserProfile() {
 
     return (
 
-        <div className="profile_sitting">
+        <div className="profile_setting">
             <div className="heroImage">
                 <HeroImage />
             </div>
 
             <div className="container_profile">
                 <div className="user_profile">
-                    <h1>My Profile setting</h1>
+                    <h1>My Profile</h1>
                     <div className="profile_img">
                         <img
-                            src={`${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_IMGU}/${image}`}
-                            alt=""
+                            src={image !== null ? `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_IMGU}/${image}` : defaultImage}
+                            alt="user_image"
                         />
                     </div>
-
+{console.log("image",image)}
                     <div className="profile_details">
                         <h3>username: {user.username}</h3>
                         <h3>firstname: {user.firstname}</h3>
@@ -59,8 +60,6 @@ function UserProfile() {
 
                     <div>
                         <img src={`${process.env.REACT_APP_SERVER_URL}${process.env.REACT_APP_IMG}/${image}`} alt="" />
-                        {console.log(user, image)}
-
                     </div>
                 </div>
 

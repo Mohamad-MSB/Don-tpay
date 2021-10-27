@@ -11,6 +11,7 @@ function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [messageAlert, setMessageAlert] = useState("");
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
@@ -20,10 +21,9 @@ function Login() {
         username: username,
         password: password,
       });
-
-      // console.log(response.data.token, response.data);
+      setMessageAlert(response.data.message)
+      console.log(response.data.token, response.data);
       if (response.status === 200) {
-        console.log("logged in");
         handleLogin(
           true,
           response.data.token,
@@ -31,58 +31,51 @@ function Login() {
           response.data.username
         );
         history.push("/");
-      }
+      } 
     } catch (error) {
       console.log(error.message);
       handleLogin(false, null);
+      
     }
   };
 
   return (
-    <div className="login">
+    <div className="login_container">
+    
       <div className="heroImage">
         <HeroImage />
       </div>
 
       <div className="container_login">
         <h1>User Login</h1>
-
+        {messageAlert ? <h3>{messageAlert}</h3> : ""}
         <div className="form">
           <form onSubmit={handleSubmitForm}>
             <div className="user">
-              <div className="username">
-                <label htmlFor="username">Username</label>
                 <input
                   onChange={(e) => setUsername(e.target.value)}
                   type="text"
                   name="username"
                   id="username"
+                  placeholder="username"
                 />
-              </div>
-
-              <div className="password">
-                <label htmlFor="password">Password</label>
                 <input
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
                   name="password"
                   id="password"
+                  placeholder="password"
                 />
-              </div>
+                <button type="submit">Login</button>
             </div>
-
             <div className="login">
-              <input type="checkbox" name="" id="loggedIn" />
+              <input type="checkbox" id="loggedIn" />
               <label htmlFor="loggedIn">Keep me logged in</label>
-              <button type="submit">Login</button>
-
-
             </div>
             <div className="forgot_password">
-
               <Link to="/forgotPass">Forgot Password?</Link>
             </div>
-
+{console.log(messageAlert)}
 
           </form>
         </div>
